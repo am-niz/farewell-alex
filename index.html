@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farewell Alexandria 🎉</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;900&family=Dancing+Script:wght@700&family=Righteous&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sun:#FFD166;--coral:#EF6C58;--teal:#06D6A0;
+  --pink:#F472B6;--cream:#FFFBF0;--dark:#1a1020;
+  --purple:#C084FC;--gold:#F59E0B;--sky:#38BDF8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Nunito',sans-serif;background:var(--cream);overflow-x:hidden;cursor:none;}
+
+#cursor{
+  width:20px;height:20px;border-radius:50%;
+  background:radial-gradient(circle,#F472B6,#EF6C58);
+  position:fixed;pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:width 0.15s,height 0.15s;
+  mix-blend-mode:multiply;
+}
+#cursor.big{width:40px;height:40px;}
+
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:998;overflow:hidden;}
+.cp{position:absolute;top:-20px;border-radius:2px;animation:fall linear infinite;}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0deg) translateX(0);opacity:1;}100%{transform:translateY(110vh) rotate(800deg) translateX(80px);opacity:0;}}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  background:linear-gradient(160deg,#1a1020 0%,#2d1040 45%,#0f2040 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:40px 20px;position:relative;overflow:hidden;text-align:center;
+}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none;}
+.orb1{width:500px;height:500px;background:rgba(244,114,182,0.22);top:-120px;left:-120px;animation:orbF 8s ease-in-out infinite;}
+.orb2{width:400px;height:400px;background:rgba(239,108,88,0.16);bottom:-60px;right:-80px;animation:orbF 10s ease-in-out infinite reverse;}
+.orb3{width:280px;height:280px;background:rgba(56,189,248,0.12);top:40%;left:60%;animation:orbF 7s ease-in-out infinite 2s;}
+@keyframes orbF{0%,100%{transform:translate(0,0);}50%{transform:translate(30px,-30px);}}
+
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.13);
+  color:rgba(255,255,255,0.75);font-size:0.68rem;font-weight:900;
+  letter-spacing:0.2em;text-transform:uppercase;padding:7px 20px;
+  border-radius:999px;margin-bottom:22px;backdrop-filter:blur(8px);
+}
+.hero-title{font-family:'Pacifico',cursive;font-size:clamp(2rem,7vw,4rem);color:rgba(255,255,255,0.65);line-height:1.1;}
+.hero-name{
+  font-family:'Dancing Script',cursive;
+  font-size:clamp(3.5rem,12vw,8rem);
+  background:linear-gradient(135deg,#FFD166,#F472B6,#38BDF8);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  display:block;line-height:1;margin:4px 0;
+  animation:shimmer 3s ease-in-out infinite;
+}
+@keyframes shimmer{0%,100%{filter:brightness(1);}50%{filter:brightness(1.25);}}
+.hero-sub{color:rgba(255,255,255,0.5);font-size:0.9rem;font-weight:700;letter-spacing:0.06em;margin-top:8px;}
+
+/* AVATAR */
+.avatar-stage{position:relative;margin:28px auto 0;width:220px;height:265px;cursor:pointer;}
+.avatar-glow{position:absolute;inset:-20px;border-radius:50%;background:radial-gradient(circle,rgba(244,114,182,0.3),transparent 70%);animation:gP 2.5s ease-in-out infinite;}
+@keyframes gP{0%,100%{opacity:0.6;transform:scale(1);}50%{opacity:1;transform:scale(1.1);}}
+#alexSvg{width:220px;height:265px;filter:drop-shadow(0 12px 32px rgba(244,114,182,0.45));transition:transform 0.25s;}
+#alexSvg:hover{transform:scale(1.03);}
+.avatar-hint{font-size:0.7rem;font-weight:900;color:rgba(255,255,255,0.38);letter-spacing:0.12em;text-transform:uppercase;margin-top:10px;animation:blink 2.5s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:0.38;}50%{opacity:1;}}
+
+.burst{position:absolute;font-size:1.6rem;pointer-events:none;animation:burstUp 0.85s ease forwards;z-index:10;}
+@keyframes burstUp{0%{opacity:1;transform:translate(0,0) scale(0.5);}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(1.6);}}
+
+.dance-btn{
+  background:linear-gradient(135deg,#F472B6,#C084FC);
+  color:white;border:none;border-radius:999px;
+  padding:11px 28px;font-family:'Nunito',sans-serif;
+  font-weight:900;font-size:0.85rem;cursor:pointer;margin-top:18px;
+  letter-spacing:0.05em;
+  box-shadow:0 4px 22px rgba(244,114,182,0.4);
+  transition:transform 0.2s,box-shadow 0.2s;
+  animation:dP 2.5s ease-in-out infinite;
+}
+@keyframes dP{0%,100%{box-shadow:0 4px 22px rgba(244,114,182,0.4);}50%{box-shadow:0 6px 32px rgba(244,114,182,0.75);}}
+.dance-btn:hover{transform:scale(1.08);}
+.dance-btn.on{background:linear-gradient(135deg,#06D6A0,#38BDF8);}
+
+.scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px;color:rgba(255,255,255,0.25);font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;animation:scrollBounce 2.2s ease-in-out infinite;}
+@keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(9px);}}
+.scroll-arrow{font-size:1.1rem;}
+
+/* CONTAINER */
+.container{max-width:880px;margin:0 auto;padding:0 20px 80px;}
+
+/* SECTIONS */
+.section{
+  background:white;border-radius:28px;padding:40px 36px;
+  margin-top:40px;position:relative;overflow:hidden;
+  box-shadow:0 8px 40px rgba(0,0,0,0.06);
+  opacity:0;transform:translateY(40px);
+  transition:opacity 0.65s ease,transform 0.65s ease;
+}
+.section.visible{opacity:1;transform:translateY(0);}
+.sec-tag{display:inline-flex;align-items:center;gap:8px;font-weight:900;font-size:0.66rem;letter-spacing:0.18em;text-transform:uppercase;padding:5px 14px;border-radius:999px;margin-bottom:14px;}
+.section h2{font-family:'Pacifico',cursive;font-size:1.85rem;margin-bottom:4px;}
+.section-sub{font-size:0.86rem;color:#999;font-weight:600;margin-bottom:6px;}
+
+.roles-strip{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0;}
+.role-pill{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:999px;font-size:0.78rem;font-weight:900;white-space:nowrap;transition:transform 0.2s;}
+.role-pill:hover{transform:scale(1.08) rotate(-1.5deg);}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(228px,1fr));gap:16px;margin-top:20px;}
+.card{border-radius:20px;padding:22px 20px;transition:transform 0.22s,box-shadow 0.22s;position:relative;overflow:hidden;cursor:default;}
+.card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at top right,rgba(255,255,255,0.15),transparent 60%);pointer-events:none;}
+.card:hover{transform:translateY(-5px) rotate(-0.5deg);box-shadow:0 14px 34px rgba(0,0,0,0.09);}
+.c-badge{position:absolute;top:13px;right:13px;font-size:0.62rem;font-weight:900;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:999px;background:rgba(0,0,0,0.07);}
+.c-icon{font-size:2.2rem;margin-bottom:10px;}
+.c-name{font-weight:900;font-size:0.94rem;margin-bottom:4px;}
+.c-desc{font-size:0.82rem;line-height:1.57;opacity:0.82;}
+
+/* MESSAGES */
+.msgs{display:flex;flex-direction:column;gap:16px;margin-top:22px;}
+.msg{border-radius:18px;padding:20px 22px;position:relative;animation:sIn 0.4s ease both;}
+@keyframes sIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.msg-author{font-weight:900;font-size:0.87rem;margin-bottom:5px;}
+.msg-text{font-size:0.92rem;line-height:1.65;}
+.msg-emoji{position:absolute;top:16px;right:18px;font-size:1.45rem;}
+
+.add-form{margin-top:28px;}
+.add-form label{font-weight:900;font-size:0.88rem;color:#555;display:block;margin-bottom:8px;}
+.add-form input,.add-form textarea{
+  width:100%;font-family:'Nunito',sans-serif;font-size:0.9rem;
+  border:2px solid #eee;border-radius:14px;padding:11px 16px;
+  outline:none;background:#fafafa;color:#1a1020;margin-bottom:10px;
+  transition:border-color 0.2s;
+}
+.add-form input:focus,.add-form textarea:focus{border-color:var(--coral);}
+.add-form textarea{resize:vertical;min-height:82px;}
+.sub-btn{
+  background:linear-gradient(135deg,var(--coral),var(--pink));
+  color:white;border:none;border-radius:14px;padding:13px 30px;
+  font-family:'Nunito',sans-serif;font-weight:900;font-size:0.95rem;cursor:pointer;
+  box-shadow:0 4px 16px rgba(239,108,88,0.35);transition:transform 0.15s,box-shadow 0.2s;
+}
+.sub-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(239,108,88,0.45);}
+
+/* FINALE */
+.finale{
+  background:linear-gradient(150deg,#1a1020,#2d1040,#0f2040);
+  border-radius:28px;padding:52px 40px;margin-top:40px;
+  text-align:center;position:relative;overflow:hidden;
+  opacity:0;transform:translateY(40px);
+  transition:opacity 0.65s 0.15s ease,transform 0.65s 0.15s ease;
+}
+.finale.visible{opacity:1;transform:translateY(0);}
+.finale::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 25% 50%,rgba(244,114,182,0.15),transparent 50%),radial-gradient(circle at 75% 30%,rgba(56,189,248,0.1),transparent 50%);}
+.finale p{color:rgba(255,255,255,0.85);font-size:1.05rem;line-height:2;max-width:620px;margin:0 auto;position:relative;}
+.finale strong{color:var(--sun);}
+.finale .sign{font-family:'Dancing Script',cursive;font-size:2.2rem;color:var(--pink);margin-top:22px;display:block;position:relative;}
+.footer{text-align:center;padding:24px;font-size:0.78rem;color:#bbb;font-weight:700;}
+@media(max-width:600px){.section,.finale{padding:26px 18px;}.hero-title{font-size:1.8rem;}}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div class="confetti-wrap" id="confetti"></div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <div class="badge">✈️ Last Day Alert — Our Favourite Sunshine Is Leaving</div>
+  <h1 class="hero-title">So Long,</h1>
+  <span class="hero-name">Alexandria</span>
+  <p class="hero-sub">aka Alex &nbsp;·&nbsp; Sales Queen 👑 &nbsp;·&nbsp; Certified Sunshine Exported Straight from the Tropics 🌴</p>
+
+  <!-- AVATAR -->
+  <div class="avatar-stage" id="avatarStage" onclick="onAvatarClick()">
+    <div class="avatar-glow"></div>
+    <svg id="alexSvg" viewBox="0 0 220 265" xmlns="http://www.w3.org/2000/svg">
+      <!-- shadow -->
+      <ellipse cx="110" cy="258" rx="58" ry="7" fill="rgba(0,0,0,0.12)"/>
+      <!-- body -->
+      <g id="bodyG">
+        <rect x="60" y="185" width="100" height="66" rx="26" fill="#C084FC"/>
+        <path d="M85 185 Q110 208 135 185" fill="#A855F7" opacity="0.55"/>
+        <!-- name badge -->
+        <rect x="88" y="198" width="44" height="26" rx="6" fill="white" opacity="0.92"/>
+        <text x="110" y="210" text-anchor="middle" font-size="6" font-weight="900" fill="#9333EA" font-family="Nunito,sans-serif">SALES QUEEN</text>
+        <text x="110" y="218" text-anchor="middle" font-size="9" font-family="Nunito,sans-serif">👑</text>
+      </g>
+      <!-- left arm -->
+      <g id="armL" style="transform-origin:68px 195px">
+        <ellipse cx="54" cy="208" rx="13" ry="30" fill="#C084FC" transform="rotate(-12 54 195)"/>
+        <ellipse cx="46" cy="234" rx="10" ry="10" fill="#F9C896"/>
+      </g>
+      <!-- right arm -->
+      <g id="armR" style="transform-origin:152px 195px">
+        <ellipse cx="166" cy="208" rx="13" ry="30" fill="#C084FC" transform="rotate(12 166 195)"/>
+        <ellipse cx="174" cy="234" rx="10" ry="10" fill="#F9C896"/>
+      </g>
+      <!-- neck -->
+      <rect x="95" y="128" width="30" height="28" rx="8" fill="#F9C896"/>
+      <!-- HEAD GROUP -->
+      <g id="headG" style="transform-origin:110px 105px">
+        <!-- hair back layer -->
+        <ellipse cx="110" cy="78" rx="54" ry="42" fill="#2D1B10"/>
+        <ellipse cx="160" cy="105" rx="17" ry="28" fill="#2D1B10"/>
+        <ellipse cx="60" cy="105" rx="17" ry="28" fill="#2D1B10"/>
+        <!-- head shape -->
+        <ellipse cx="110" cy="112" rx="52" ry="55" fill="#F9C896"/>
+        <!-- cheeks -->
+        <ellipse cx="78" cy="125" rx="13" ry="9" fill="#FECDD3" opacity="0.58"/>
+        <ellipse cx="142" cy="125" rx="13" ry="9" fill="#FECDD3" opacity="0.58"/>
+
+        <!-- EYES normal -->
+        <g id="eyeNorm">
+          <path d="M86 103 Q94 95 102 103" stroke="#3B1F0F" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <path d="M118 103 Q126 95 134 103" stroke="#3B1F0F" stroke-width="3" stroke-linecap="round" fill="none"/>
+        </g>
+        <!-- EYES wide (curious) -->
+        <g id="eyeWide" opacity="0">
+          <circle cx="94" cy="101" r="10" fill="white"/>
+          <circle cx="94" cy="102" r="5.5" fill="#3B1F0F"/>
+          <circle cx="96" cy="100" r="2" fill="white"/>
+          <circle cx="126" cy="101" r="10" fill="white"/>
+          <circle cx="126" cy="102" r="5.5" fill="#3B1F0F"/>
+          <circle cx="128" cy="100" r="2" fill="white"/>
+        </g>
+        <!-- EYES laugh -->
+        <g id="eyeLaugh" opacity="0">
+          <path d="M84 98 L100 112 M100 98 L84 112" stroke="#3B1F0F" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M116 98 L132 112 M132 98 L116 112" stroke="#3B1F0F" stroke-width="3.5" stroke-linecap="round"/>
+        </g>
+
+        <!-- GLASSES -->
+        <rect x="77" y="96" width="28" height="18" rx="7" fill="rgba(255,255,255,0.15)" stroke="#222" stroke-width="2.8"/>
+        <rect x="115" y="96" width="28" height="18" rx="7" fill="rgba(255,255,255,0.15)" stroke="#222" stroke-width="2.8"/>
+        <line x1="105" y1="105" x2="115" y2="105" stroke="#222" stroke-width="2.8"/>
+        <line x1="77" y1="105" x2="66" y2="102" stroke="#222" stroke-width="2.8"/>
+        <line x1="143" y1="105" x2="154" y2="102" stroke="#222" stroke-width="2.8"/>
+
+        <!-- MOUTH normal -->
+        <g id="mNorm">
+          <path d="M88 132 Q110 150 132 132" fill="#D94F2B"/>
+          <path d="M93 133 Q110 144 127 133" fill="white"/>
+          <path d="M88 132 Q110 150 132 132" stroke="#3B1F0F" stroke-width="1.5" fill="none"/>
+        </g>
+        <!-- MOUTH laugh -->
+        <g id="mLaugh" opacity="0">
+          <ellipse cx="110" cy="138" rx="21" ry="17" fill="#C0392B"/>
+          <ellipse cx="110" cy="131" rx="19" ry="11" fill="white"/>
+          <text x="110" y="148" text-anchor="middle" font-size="13">😂</text>
+        </g>
+        <!-- MOUTH curious -->
+        <g id="mCurio" opacity="0">
+          <ellipse cx="110" cy="135" rx="9" ry="8" fill="#D94F2B"/>
+        </g>
+
+        <!-- hair front -->
+        <ellipse cx="110" cy="62" rx="52" ry="28" fill="#3D2514"/>
+        <ellipse cx="88" cy="56" rx="24" ry="11" fill="#5C3521" opacity="0.6"/>
+
+        <!-- speech bubble -->
+        <g id="bubG" opacity="0">
+          <rect x="148" y="36" width="66" height="32" rx="10" fill="white"/>
+          <polygon points="155,68 163,78 172,68" fill="white"/>
+          <text x="181" y="57" text-anchor="middle" font-size="10" font-family="Nunito,sans-serif" font-weight="900" fill="#9333EA">Hmm? 👀</text>
+        </g>
+
+        <!-- sweat drop -->
+        <g id="sweatG" opacity="0">
+          <ellipse cx="160" cy="72" rx="6" ry="9" fill="#38BDF8" opacity="0.85"/>
+          <path d="M160 63 Q165 58 160 62" fill="#38BDF8"/>
+        </g>
+      </g>
+
+      <!-- music notes -->
+      <g id="notesG" opacity="0">
+        <text x="22" y="88" font-size="22" fill="#FFD166">♪</text>
+        <text x="178" y="95" font-size="17" fill="#F472B6">♫</text>
+        <text x="14" y="148" font-size="15" fill="#06D6A0">♩</text>
+        <text x="186" y="52" font-size="20" fill="#38BDF8">♬</text>
+      </g>
+    </svg>
+    <div class="speech-bubble-ext" id="extBubble" style="position:absolute;top:4px;left:-10px;background:white;border-radius:12px;padding:7px 12px;font-size:0.78rem;font-weight:900;color:#333;box-shadow:0 4px 14px rgba(0,0,0,0.12);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.3s;z-index:5;">👆 Click to hear me laugh!</div>
+  </div>
+
+  <p class="avatar-hint">tap alex · she reacts!</p>
+  <button class="dance-btn" id="danceBtn" onclick="toggleDance()">💃 Make Alex Dance!</button>
+
+  <div class="scroll-hint">
+    <span>scroll down</span>
+    <span class="scroll-arrow">↓</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+
+  <!-- WHO IS SHE -->
+  <div class="section" id="s1">
+    <div class="sec-tag" style="background:#FFF3CD;color:#92400E;">⭐ The Legend</div>
+    <h2 style="color:#92400E;">Who Is Alex, Really?</h2>
+    <p class="section-sub">A one-woman business powerhouse. Designer, trainer, sales machine, and Chief Laugh Officer — all in one.</p>
+
+    <div class="roles-strip">
+      <div class="role-pill" style="background:#FEE2E2;color:#991B1B;">📞 Cold Call Queen</div>
+      <div class="role-pill" style="background:#FFF3CD;color:#92400E;">🎬 Video Editor</div>
+      <div class="role-pill" style="background:#ECFDF5;color:#065F46;">🖼️ Photoshop Pro</div>
+      <div class="role-pill" style="background:#EEF2FF;color:#3730A3;">🧩 Odoo ERP Trainer</div>
+      <div class="role-pill" style="background:#FDF4FF;color:#6B21A8;">👑 Sales Manager</div>
+      <div class="role-pill" style="background:#FFF1F2;color:#BE185D;">😂 Mood Lifter</div>
+    </div>
+
+    <div class="grid">
+      <div class="card" style="background:#FEE2E2;color:#7F1D1D;">
+        <div class="c-badge" style="color:#991B1B;">LEGENDARY</div>
+        <div class="c-icon">📞</div>
+        <div class="c-name">Cold Call Champion</div>
+        <div class="c-desc">Picked up the phone every day and turned total strangers into actual clients. Nobody says "no" to Alex. They just haven't tried hard enough.</div>
+      </div>
+      <div class="card" style="background:#FFF3CD;color:#78350F;">
+        <div class="c-badge" style="color:#92400E;">PRO LEVEL</div>
+        <div class="c-icon">🎬</div>
+        <div class="c-name">Video & Image Editor</div>
+        <div class="c-desc">From Photoshop masterpieces to polished videos — she made everything look cinematic. The company looked good because Alex made it look good.</div>
+      </div>
+      <div class="card" style="background:#ECFDF5;color:#064E3B;">
+        <div class="c-badge" style="color:#065F46;">SENSEI</div>
+        <div class="c-icon">🧩</div>
+        <div class="c-name">Odoo ERP Trainer</div>
+        <div class="c-desc">Patiently walked confused clients through entire ERP systems — probably in her sleep. If Odoo had a hall of fame, she'd be in it.</div>
+      </div>
+      <div class="card" style="background:#EEF2FF;color:#1E1B4B;">
+        <div class="c-badge" style="color:#3730A3;">BOSS MODE</div>
+        <div class="c-icon">👑</div>
+        <div class="c-name">Admin & Sales Manager</div>
+        <div class="c-desc">Juggled sales targets, admin duties, client relationships, and probably everyone's lunch orders simultaneously. How? Unknown. She just smiled and did it.</div>
+      </div>
+      <div class="card" style="background:#FDF4FF;color:#3B0764;">
+        <div class="c-badge" style="color:#6B21A8;">INFECTIOUS</div>
+        <div class="c-icon">😂</div>
+        <div class="c-name">Chief Laugh Officer</div>
+        <div class="c-desc">That laugh. You know the one. Loud, contagious, unstoppable — and powerful enough to reset any bad day. She was the team's unofficial therapist.</div>
+      </div>
+      <div class="card" style="background:#FFF1F2;color:#4C0519;">
+        <div class="c-badge" style="color:#BE185D;">CERTIFIED</div>
+        <div class="c-icon">🌴</div>
+        <div class="c-name">Premium Tropical Import</div>
+        <div class="c-desc">Brought that island warmth, resilience, and world-class hospitality to the office. Rare product. One-time supplier. We will not restock. 😭</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FUN FACTS -->
+  <div class="section" id="s2">
+    <div class="sec-tag" style="background:#EEF2FF;color:#3730A3;">🎭 The Unforgettable Quirks</div>
+    <h2 style="color:#3730A3;">Alex's Greatest Hits</h2>
+    <div class="grid" style="margin-top:20px;">
+      <div class="card" style="background:#EEF2FF;color:#1E1B4B;">
+        <div class="c-icon">👓</div>
+        <div class="c-name">The Iconic Specs</div>
+        <div class="c-desc">Those glasses meant business. When Alex pushed them up before a call, you knew someone on the other end was about to sign something.</div>
+      </div>
+      <div class="card" style="background:#FFF3CD;color:#78350F;">
+        <div class="c-icon">😅</div>
+        <div class="c-name">The Legendary Cough</div>
+        <div class="c-desc">Unmistakable. Trademarked. Patented. You always knew exactly where Alex was in the building. A real human sonar system. Endearing every single time.</div>
+      </div>
+      <div class="card" style="background:#ECFDF5;color:#064E3B;">
+        <div class="c-icon">📱</div>
+        <div class="c-name">Queen of the Cold Call</div>
+        <div class="c-desc">Most people dread cold calls. Alex treated them like casual chats with old friends. Our entire pipeline owes her a thank-you card.</div>
+      </div>
+      <div class="card" style="background:#FEE2E2;color:#7F1D1D;">
+        <div class="c-icon">🌟</div>
+        <div class="c-name">Suspiciously Positive</div>
+        <div class="c-desc">We never figured out how she stayed so cheerful. It's borderline supernatural. Whatever her secret is, bottle it — she'd sell it out immediately.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MESSAGES -->
+  <div class="section" id="s3">
+    <div class="sec-tag" style="background:#ECFDF5;color:#065F46;">💬 From the Team</div>
+    <h2 style="color:#065F46;">Messages for Alex</h2>
+    <p class="section-sub">She's going to read every single one. Don't hold back. 💛</p>
+
+    <div class="msgs" id="msgList">
+      <div class="msg" style="background:#FFF3CD;">
+        <div class="msg-emoji">👑</div>
+        <div class="msg-author" style="color:#92400E;">The Whole Team</div>
+        <div class="msg-text">Alex — you showed up every day and did the work nobody else wanted to do, with a smile that honestly made us feel bad about complaining. You are irreplaceable and we already miss you. 💛</div>
+      </div>
+      <div class="msg" style="background:#FEE2E2;">
+        <div class="msg-emoji">📞</div>
+        <div class="msg-author" style="color:#991B1B;">Sales & Admin</div>
+        <div class="msg-text">You cold-called your way into our hearts and warm-called your way out. Whoever gets you next is the luckiest company alive. Go make them regret every other hire they ever made! 🚀</div>
+      </div>
+      <div class="msg" style="background:#EEF2FF;">
+        <div class="msg-emoji">🎬</div>
+        <div class="msg-author" style="color:#3730A3;">Everyone Here</div>
+        <div class="msg-text">Photoshop edits, Odoo training, cold calls, video production, and somehow always laughing through it all — you did it all effortlessly. That cough echoing down the hall? We're going to miss it more than we admit. 😂</div>
+      </div>
+    </div>
+
+    <div class="add-form" style="margin-top:28px;">
+      <label>✍️ Add your farewell message for Alex!</label>
+      <input type="text" id="nameIn" placeholder="Your name" maxlength="40"/>
+      <textarea id="msgIn" placeholder="Write something heartfelt, funny, or both… she deserves it 🥹" maxlength="400"></textarea>
+      <button class="sub-btn" onclick="addMsg()">💌 Send My Message to Alex</button>
+    </div>
+  </div>
+
+  <!-- FINALE -->
+  <div class="finale" id="finale">
+    <div style="font-size:2.8rem;margin-bottom:20px;position:relative;">🌺 🌟 💛 🌟 🌺</div>
+    <p>
+      <strong>Dear Alexandria,</strong><br><br>
+      You walked into this company carrying <strong>a phone, a Photoshop license, and enough energy for the entire floor.</strong>
+      You cold-called clients into believing in us. You edited videos until they looked stunning.
+      You trained people on Odoo with infinite patience. You designed, managed, sold, and trained — all at the same time.<br><br>
+      And through every single task, you never stopped <strong>laughing.</strong>
+      That legendary, room-filling laugh that made every hard day feel survivable.<br><br>
+      <strong>Maraming salamat, Alex.</strong> Thank you for the hustle, the warmth,
+      the iconic specs, the legendary cough, and the joy you brought just by being here.<br><br>
+      You were our <strong>favourite feature.</strong> No one can replace you — and we won't even try. 🚀
+    </p>
+    <span class="sign">With love & a standing ovation, your team 💛</span>
+  </div>
+</div>
+
+<div class="footer">Made with ❤️ for Alexandria "Alex" · Our Favourite Premium Tropical Import · Sales Queen 👑</div>
+
+<script>
+// CURSOR
+const cursor=document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';});
+document.addEventListener('mousedown',()=>cursor.classList.add('big'));
+document.addEventListener('mouseup',()=>cursor.classList.remove('big'));
+
+// CONFETTI
+const cols=['#FFD166','#EF6C58','#06D6A0','#F472B6','#C084FC','#38BDF8','#FBBF24'];
+const wrap=document.getElementById('confetti');
+for(let i=0;i<72;i++){
+  const p=document.createElement('div');p.className='cp';
+  p.style.left=Math.random()*100+'vw';
+  p.style.width=(Math.random()*8+5)+'px';p.style.height=(Math.random()*10+7)+'px';
+  p.style.background=cols[Math.floor(Math.random()*cols.length)];
+  p.style.animationDuration=(Math.random()*5+3)+'s';
+  p.style.animationDelay=(Math.random()*6)+'s';
+  p.style.borderRadius=Math.random()>0.5?'50%':'2px';
+  wrap.appendChild(p);
+}
+
+// AVATAR ELEMENTS
+const alexSvg=document.getElementById('alexSvg');
+const headG=document.getElementById('headG');
+const armL=document.getElementById('armL');
+const armR=document.getElementById('armR');
+const eyeNorm=document.getElementById('eyeNorm');
+const eyeWide=document.getElementById('eyeWide');
+const eyeLaugh=document.getElementById('eyeLaugh');
+const mNorm=document.getElementById('mNorm');
+const mLaugh=document.getElementById('mLaugh');
+const mCurio=document.getElementById('mCurio');
+const notesG=document.getElementById('notesG');
+const bubG=document.getElementById('bubG');
+const sweatG=document.getElementById('sweatG');
+const extBubble=document.getElementById('extBubble');
+const danceBtn=document.getElementById('danceBtn');
+
+// INJECT KEYFRAMES
+const ks=document.createElement('style');
+ks.textContent=`
+@keyframes idleF{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-8px) rotate(1deg);}}
+@keyframes laughB{0%,100%{transform:translateY(0) scale(1) rotate(0deg);}25%{transform:translateY(-14px) scale(1.06) rotate(-3deg);}75%{transform:translateY(-7px) scale(1.03) rotate(2deg);}}
+@keyframes danceM{0%,100%{transform:translateY(0) rotate(0deg) scale(1);}20%{transform:translateY(-12px) rotate(-4deg) scale(1.04);}40%{transform:translateY(-5px) rotate(4deg) scale(1.02);}60%{transform:translateY(-16px) rotate(-2deg) scale(1.05);}80%{transform:translateY(-7px) rotate(5deg) scale(1.01);}}
+@keyframes armLW{0%,100%{transform:rotate(0deg);}50%{transform:rotate(-35deg);}}
+@keyframes armRW{0%,100%{transform:rotate(0deg);}50%{transform:rotate(35deg);}}
+@keyframes headTilt{0%,100%{transform:rotate(0deg);}50%{transform:rotate(9deg);}}
+@keyframes noteFloat{0%,100%{opacity:0.9;transform:translateY(0);}50%{opacity:0.5;transform:translateY(-12px);}}
+`;
+document.head.appendChild(ks);
+
+let isDancing=false;
+let laughTO=null;
+let danceInt=null;
+let curState='idle';
+
+function setEyes(m){eyeNorm.style.opacity=m==='n'?1:0;eyeWide.style.opacity=m==='w'?1:0;eyeLaugh.style.opacity=m==='l'?1:0;}
+function setMouth(m){mNorm.style.opacity=m==='n'?1:0;mLaugh.style.opacity=m==='l'?1:0;mCurio.style.opacity=m==='c'?1:0;}
+
+function setIdle(){
+  curState='idle';
+  alexSvg.style.animation='idleF 3s ease-in-out infinite';
+  headG.style.animation='none';armL.style.animation='none';armR.style.animation='none';
+  notesG.style.opacity='0';bubG.style.opacity='0';sweatG.style.opacity='0';
+  setEyes('n');setMouth('n');
+}
+
+function doLaugh(){
+  if(isDancing)return;
+  if(laughTO)clearTimeout(laughTO);
+  curState='laugh';
+  alexSvg.style.animation='laughB 0.45s ease-in-out infinite';
+  headG.style.animation='none';
+  setEyes('l');setMouth('l');
+  bubG.style.opacity='0';
+  spawnBursts(false);
+  laughTO=setTimeout(()=>{if(!isDancing)setIdle();},2800);
+}
+
+function onAvatarClick(){doLaugh();}
+
+function toggleDance(){
+  isDancing=!isDancing;
+  if(isDancing){
+    curState='dance';
+    danceBtn.textContent='🛑 Stop the Party!';danceBtn.classList.add('on');
+    if(laughTO)clearTimeout(laughTO);
+    alexSvg.style.animation='danceM 0.65s ease-in-out infinite';
+    headG.style.animation='none';
+    armL.style.animation='armLW 0.65s ease-in-out infinite';
+    armR.style.animation='armRW 0.65s ease-in-out infinite 0.32s';
+    notesG.style.opacity='1';
+    notesG.style.animation='noteFloat 1.5s ease-in-out infinite';
+    setEyes('l');setMouth('l');
+    spawnBursts(true);
+    danceInt=setInterval(()=>spawnBursts(true),1100);
+  } else {
+    danceBtn.textContent='💃 Make Alex Dance!';danceBtn.classList.remove('on');
+    if(danceInt)clearInterval(danceInt);
+    setIdle();
+  }
+}
+
+function setCurious(){
+  if(isDancing||curState==='laugh')return;
+  curState='curious';
+  alexSvg.style.animation='none';
+  headG.style.animation='headTilt 2.5s ease-in-out infinite';
+  setEyes('w');setMouth('c');
+  bubG.style.opacity='1';
+}
+
+const laughE=['😂','🤣','😆','💛','⭐','✨','🎉','😭','👑','📞','🌟','😅'];
+const danceE=['🎵','🎶','💃','🕺','✨','🎊','🔥','⭐','🌟','💫'];
+
+function spawnBursts(dance){
+  const stage=document.getElementById('avatarStage');
+  const emojis=dance?danceE:laughE;
+  for(let i=0;i<5;i++){
+    const b=document.createElement('div');b.className='burst';
+    b.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    b.style.left=(20+Math.random()*170)+'px';
+    b.style.top=(30+Math.random()*130)+'px';
+    b.style['--tx']=(Math.random()*120-60)+'px';
+    b.style['--ty']=(-60-Math.random()*90)+'px';
+    b.style.animationDelay=(Math.random()*0.3)+'s';
+    stage.appendChild(b);
+    setTimeout(()=>b.remove(),950);
+  }
+}
+
+// show hint bubble briefly at start
+setTimeout(()=>{extBubble.style.opacity='1';},1200);
+setTimeout(()=>{extBubble.style.opacity='0';},4000);
+
+// SCROLL — section reveal + curious trigger
+const sectionEls=document.querySelectorAll('.section,.finale');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.15});
+sectionEls.forEach(s=>obs.observe(s));
+
+let curiousUsed=false;
+window.addEventListener('scroll',()=>{
+  if(window.scrollY>180&&!curiousUsed&&!isDancing&&curState!=='laugh'){
+    curiousUsed=true;
+    setCurious();
+    setTimeout(()=>{if(!isDancing){setIdle();curiousUsed=false;}},3200);
+  }
+});
+
+// MESSAGES
+const mbg=[
+  {bg:'#FFF3CD',ac:'#92400E'},{bg:'#FEE2E2',ac:'#991B1B'},
+  {bg:'#ECFDF5',ac:'#065F46'},{bg:'#EEF2FF',ac:'#3730A3'},
+  {bg:'#FDF4FF',ac:'#6B21A8'},{bg:'#FFF1F2',ac:'#BE185D'},
+];
+const me=['💛','🌟','😊','🚀','💐','🎉','🌺','✨','💌','🥹','👑','📞'];
+let mi=3;
+
+function addMsg(){
+  const n=document.getElementById('nameIn').value.trim();
+  const t=document.getElementById('msgIn').value.trim();
+  if(!n||!t){alert('Please fill in your name and message! 😊');return;}
+  const c=mbg[mi%mbg.length];const e=me[Math.floor(Math.random()*me.length)];mi++;
+  const card=document.createElement('div');card.className='msg';card.style.background=c.bg;
+  card.innerHTML=`<div class="msg-emoji">${e}</div><div class="msg-author" style="color:${c.ac}">${n}</div><div class="msg-text">${t}</div>`;
+  document.getElementById('msgList').appendChild(card);
+  document.getElementById('nameIn').value='';document.getElementById('msgIn').value='';
+  card.scrollIntoView({behavior:'smooth',block:'center'});
+  doLaugh();
+}
+
+setIdle();
+</script>
+</body>
+</html>
