@@ -881,34 +881,97 @@ setIdle();
     const btn = document.querySelector('.cough-btn');
     btn.textContent = '😷 Ahem... Ahem... AHEM!!';
     btn.style.transform = 'scale(0.95)';
+  
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    function coughBurst(time, freq, dur) {
-      const buf = ctx.createBuffer(1, ctx.sampleRate * dur, ctx.sampleRate);
+  
+    function bigCough(startTime, volume) {
+      // NOISE burst — the main cough body
+      const bufSize = ctx.sampleRate * 0.4;
+      const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
       const data = buf.getChannelData(0);
-      for (let i = 0; i < data.length; i++) {
-        data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / data.length, 2);
+      for (let i = 0; i < bufSize; i++) {
+        data[i] = (Math.random() * 2 - 1);
       }
-      const src = ctx.createBufferSource();
-      src.buffer = buf;
+  
+      const noise = ctx.createBufferSource();
+      noise.buffer = buf;
+  
+      // Shape the cough — sharp attack, fast decay
+      const gainNode = ctx.createGain();
+      gainNode.gain.setValueAtTime(0, startTime);
+      gainNode.gain.linearRampToValueAtTime(volume, startTime + 0.01); // sharp attack
+      gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + 0.35); // decay
+  
+      // Low pass to make it sound like a throat, not static
+      const lowpass = ctx.createBiquadFilter();
+      lowpass.type = 'lowpass';
+      lowpass.frequency.value = 1800;
+      lowpass.Q.value = 0.7;
+  
+      // Bandpass to give it that "chesty" cough frequency
+      const bandpass = ctx.createBiquadFilter();
+      bandpass.type = 'bandpass';
+      bandpass.frequency.value = 400;
+      bandpass.Q.value = 0.5;
+  
+      // Slight distortion for harshness
+      const waveshaper = ctx.createWaveShaper();
+      const curve = new Float32Array(256);
+      for (let i = 0; i < 256; i++) {
+        const x = (i * 2) / 256 - 1;
+        curve[i] = (Math.PI + 200) * x / (Math.PI + 200 * Math.abs(x));
+      }
+      waveshaper.curve = curve;
+  
+      noise.connect(lowpass);
+      lowpass.connect(bandpass);
+      bandpass.connect(waveshaper);
+      waveshaper.connect(gainNode);
+      gainNode.connect(ctx.destination);
+      noise.start(startTime);
+      noise.stop(startTime + 0.4);
+    }
+  
+    function throatClear(startTime) {
+      // Short "ahem" before the big cough
+      const bufSize = ctx.sampleRate * 0.15;
+      const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < bufSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * 0.5;
+      }
+      const noise = ctx.createBufferSource();
+      noise.buffer = buf;
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0, startTime);
+      gain.gain.linearRampToValueAtTime(0.6, startTime + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.15);
       const filter = ctx.createBiquadFilter();
       filter.type = 'bandpass';
-      filter.frequency.value = freq;
-      filter.Q.value = 0.8;
-      const gain = ctx.createGain();
-      gain.gain.setValueAtTime(0.8, ctx.currentTime + time);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + time + dur);
-      src.connect(filter);
+      filter.frequency.value = 600;
+      filter.Q.value = 1.2;
+      noise.connect(filter);
       filter.connect(gain);
       gain.connect(ctx.destination);
-      src.start(ctx.currentTime + time);
+      noise.start(startTime);
+      noise.stop(startTime + 0.15);
     }
-    coughBurst(0, 600, 0.15);
-    coughBurst(0.18, 500, 0.2);
-    coughBurst(0.42, 550, 0.25);
+  
+    // Sequence: ahem... ahem... AHEM!! (getting louder each time)
+    throatClear(ctx.currentTime);            // quiet ahem
+    bigCough(ctx.currentTime + 0.2, 1.2);   // medium cough
+  
+    throatClear(ctx.currentTime + 0.7);     // quiet ahem
+    bigCough(ctx.currentTime + 0.9, 1.8);   // louder cough
+  
+    // THE BIG ONE 💥
+    bigCough(ctx.currentTime + 1.5, 3.0);   // LOUD final cough
+    bigCough(ctx.currentTime + 1.6, 2.5);   // echo of the big one
+  
     setTimeout(() => {
       btn.textContent = '🤧 Tap to Hear the Legendary Cough!';
       btn.style.transform = 'scale(1)';
-    }, 2500);
+    }, 3000);
   }
 
   // ===== 💬 FIREBASE — LOAD MESSAGES =====
